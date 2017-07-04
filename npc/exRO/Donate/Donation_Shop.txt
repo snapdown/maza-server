@@ -1,0 +1,47 @@
+-	cashshop	Usables	-1,14232:10,14545:20,12210:20,12103:25,12912:50,12412:150,13758:150,12902:150
+-	cashshop	UpperHeadgears	-1,5518:350,5374:350,5801:250,5423:150,5293:150,5372:150,5359:150,5137:150,5363:150,5376:150
+-	cashshop	MiddleHeadgears	-1,2202:350,18503:350,5325:150,5800:150,5389:100,5314:100
+-	cashshop	LowerHeadgears	-1,5155:250,5574:250,5597:150,5377:150
+-	cashshop	Equipments	-1,1228:500,13017:500,2423:250,2655:250,2554:250
+-	cashshop	Foods	-1,12903:25,12904:25,12905:25,12906:25,12907:25,12908:25
+-	cashshop	Misc#1	-1,29013:100,29014:500,29000:200,7776:150
+
+splendide,209,138,3	script	Donation Shop	790,{
+	mes "[Donation Shop]";
+	mes "Welcome, "+(Sex?"Mr.":"Mrs.")+" "+strcharinfo(0);
+	switch(select("Usables:Upper Headgears:Middle Headgears:Lower Headgears:Equipments:Foods:Misc:Close")){
+		case 1:
+			callshop "Usables",1;
+			end;
+			
+		case 2:
+			callshop "UpperHeadgears",1;
+			end;
+			
+		case 3:
+			callshop "MiddleHeadgears",1;
+			end;
+			
+		case 4:
+			callshop "LowerHeadgears",1;
+			end;
+			
+		case 5:
+			callshop "Equipments",1;
+			end;
+		
+		case 6:
+			callshop "Foods",1;
+			end;
+		
+		case 7:
+			callshop "Misc#1",1;
+			end;
+			
+		case 8:
+			close;
+	}
+OnInit:
+	waitingroom "Donation Shop",0;
+	end;
+}

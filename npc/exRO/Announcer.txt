@@ -1,0 +1,45 @@
+////=========================[ CreaTeD 10 august 2009 ]======================////
+////========================[ Created By Andrew RicozTa ]==========================////
+////=======================[ Special Thanks To Aozi & GM Ocean ]=====================////
+////======================[ Auto Announce Script For Your Server ]=================////
+////====================[ Tested On MiracLe Ragnarok - Stable 13887 ]============////
+////=====================[ Version 2.0 ]============////
+////==========================[ Fixed Bug Timer =p ]===============////
+-	script	Inside	-1,{
+
+OnInit:
+while(1) {
+
+
+announce "Welcome To Global-RO ^_^ Enjoy have fun [Please report any BUGS find]",bc_yellow|bc_all;
+sleep 100000;
+
+announce "Top 1 donator will get a Gaming Laptop And rest donators will get gaming accessories and goodies. winner will be annouced soon :D",bc_yellow|bc_all;
+sleep 200000;
+
+announce "Harassment, Racism, Discrimination or Disrespectful acts are Prohibited and many result in server punishment.",bc_yellow|bc_all;
+sleep 300000;
+
+announce "Exploiting Bugs that may complicate the server's economy or ruin the sever will result in permanent ban of account.",bc_yellow|bc_all;
+sleep 300000;
+
+announce "Always visit Global-Ro Facebook Page for important  annoucements. Register on our forum [ forum link] to see the latest update about the game.",bc_yellow|bc_all;
+sleep 300000;
+
+announce "You can check commands helpful to you by typing @commands. Typing autoloot will enable players to get items automatically at a chosen percentage.",bc_yellow|bc_all;
+sleep 300000;
+
+announce "Begging for item or zeny is against the law especially for GM characters.",bc_yellow|bc_all;
+sleep 300000;
+
+announce "Trading Ragnarok items for real money, load and other similar deals besides in-game currency isn't allowed in the game.",bc_yellow|bc_all;
+sleep 300000;
+
+announce "The Donation Shop and Quest NPC are located Splendide town. Be sure to check it from time to time.",bc_yellow|bc_all;
+sleep 300000;
+
+announce "We are not entertaining any hack or scam cases for the meantime. Your account is your own priority. Be wise and secure with it.",bc_yellow|bc_all;
+sleep 300000;
+
+}
+}

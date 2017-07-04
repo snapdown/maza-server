@@ -1,0 +1,51 @@
+splendide,211,128,3	script	EnchantNPC	465,{
+	mes "do you want to enchant your equipment ?";
+	next;
+	mes "Depends on your luck can get up to +5 stat orbs with 100% success rate";
+	next;
+	mes "Be careful! ^FF0000once you enchant any equipment you can not remove orbs from equipment by any chance";
+	next;
+	mes "Be careful! ^FF0000Dont enchant without equipment or the ticket will get wasted";
+	next;
+	mes "Enchant Equipment: ^FF00001x Ticket Of Identification";
+	.@s = select( .menu$ ) -1;
+	delitem 7623,1;
+	if ( !getequipisequiped( .const_equip[.@s] ) || .const_equip[.@s] == EQI_HAND_L && getiteminfo( getequipid( EQI_HAND_L ),3 ) != 5 ) {
+		mes "you did not equip an "+ .menu_name$[.@s] +" at the moment";
+		close;
+	}
+	.@id = getequipid( .const_equip[.@s] );
+	.@ref = getequiprefinerycnt( .const_equip[.@s] );
+	.@card1 = getequipcardid( .const_equip[.@s], 0 );
+	.@card2 = getequipcardid( .const_equip[.@s], 1 );
+	.@card3 = getequipcardid( .const_equip[.@s], 2 );
+	.@card4 = getequipcardid( .const_equip[.@s], 3 );
+	if ( .@card1 == 255 || .@card1 == 254 ) {
+		mes "I can't enchant a signed equipment";
+		close;
+	}
+	if ( .@card4 ) {
+		mes "this armor has already enchanted";
+		close;
+	}
+	
+	.@rand = rand(.totalchance);
+	while ( ( .@rand = .@rand - .rate[.@r] ) >= 0 ) .@r++;
+	.@o = rand(0,5); // orb of str/int/dex ....
+
+	delitem2 .@id, 1,1, .@ref, 0, .@card1, .@card2, .@card3, 0;
+	getitem2 .@id, 1,1, .@ref, 0, .@card1, .@card2, .@card3, 4700 + .@o * 10 + .@r;
+	equip .@id;
+	close;
+OnInit:
+	setarray .rate, 55,50,45,40,35; // rate of getting +1 is 55%, +2 is 50% .... +10 is 10% ...
+
+	setarray .const_equip, EQI_ARMOR, EQI_GARMENT, EQI_SHOES;
+	setarray .menu_name$, "Armor", "Garment", "Shoes";
+	.menu$ = implode( .menu_name$,":" );
+	while ( .@i < 10 ) {
+		.totalchance = .totalchance + .rate[.@i];
+		.@i++;
+	}
+	end;
+}

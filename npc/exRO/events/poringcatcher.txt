@@ -1,0 +1,179 @@
+//======Name========================================
+// Poring Catcher Event
+//======Version=====================================
+// 1.0
+//======Author(s)===================================
+// Sandbox, Clydelion
+//======Comments====================================
+// In loving memory of AstralRO
+//==================================================
+
+
+//Edit to where would you place the warper
+splendide,174,146,4	script	Poring Catcher Warper	725,{
+
+mes "Do you want to join the Poring Catcher Event?";
+menu "Yes",-;
+warp "poring_w01",0,0;
+close;
+
+}
+
+-	script	pcetrigger	-1,{
+
+OnInit:
+disablenpc "Poring Catcher Warper";
+end;
+
+OnClock0200:
+OnClock0800:
+OnClock1400:
+OnClock2000:
+
+
+OnCatcherTrigger:
+if(agitcheck() == 1) end;
+enablenpc "Poring Catcher Warper";
+announce "Poring Catcher Event: We are going to have a Poring Catcher Event",bc_all,0xFF7F50;
+sleep2 1000;
+announce "Poring Catcher Event: For those who want to join, please warp @ splendide 174 146!",bc_all,0xFF7F50; //Edit to where would you place the warper
+sleep2 1000;
+announce "Poring Catcher Event: The Warper would be open for 1 minute",bc_all,0xFF7F50;
+sleep2 30000;
+announce "Poring Catcher Event: Last 30 Seconds.",bc_all,0xFF7F50;
+sleep2 30000;
+announce "Poring Catcher Event: Warper Closed.",bc_all,0xFF7F50;
+disablenpc "Poring Catcher Warper";
+donpcevent "Poring Catcher Event::OnPoringCatcherStart";
+end;
+
+}
+
+poring_w01,42,54,5	script	Got Stuck?#pce	948,{
+
+mes "[ Got Stuck? ]";
+mes "Do you wish to go back?";
+menu "Yes",-;
+warp "splendide",199,142;
+close;
+
+}
+
+-	script	Poring Catcher Event	-1,{
+
+OnPoringCatcherStart:
+mapannounce "poring_w01","We are about to start the Poring Catcher Event.",bc_blue;
+sleep2 1000;
+mapannounce "poring_w01","Rules are simple:",bc_blue;
+sleep2 1000;
+mapannounce "poring_w01","In a few seconds I'm going to spawn tons of porings..",bc_blue;
+sleep2 1000;
+mapannounce "poring_w01","..All you need to do is kill the Poring with the right name and get 5x Gold Coin..",bc_blue;
+sleep2 1000;
+mapannounce "poring_w01","..Which would be Poring.",bc_blue;
+sleep2 1000;
+mapannounce "poring_w01","..And kill Bonus Poring to get 5x Gold Coin.",bc_blue;
+sleep2 1000;
+mapannounce "poring_w01","If you kill the wrong one, you're out!",bc_blue;
+sleep2 3000;
+mapannounce "poring_w01","That's it.. Now let's get this on!",bc_blue;
+sleep2 3000;
+goto Lstart;
+end;
+
+
+Lstart:
+if(getmapusers("poring_w01") == 0) goto Lnoone;
+if(getmapusers("poring_w01") > 0) {
+mapannounce "poring_w01","Ready...",bc_blue;
+sleep2 1000;
+mapannounce "poring_w01","Get Set..",bc_blue;
+sleep2 1500;
+mapannounce "poring_w01","Go!",bc_blue;
+sleep2 1000;
+monster "poring_w01",0,0,"Poring",1002,1,"poringwin::OnMobKilled";
+monster "poring_w01",0,0,"Bonus Poring",1002,5,"poringbonus::OnMobKilled";
+monster "poring_w01",0,0,"Poking",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Poiring",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Poling",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Porng",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"pH0ur1n6",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"P0ring",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Porong",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Powing",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Poriing",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Boring",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Lolwut!?",1002,5,"poringlose::OnMobKilled";
+monster "poring_w01",0,0,"Kill me to win!",1002,5,"poringlose::OnMobKilled";
+sleep2 1800000;
+if(getmapusers("poring_w01") > 0) { goto Lnoone;
+disablenpc "Poring Catcher Warper";
+}
+end;
+
+Lnoone:
+announce "No one won the Poring Catcher Event!",bc_all,0xFF7F50;
+mapwarp "poring_w01","splendide",199,142;
+killmonsterall "poring_w01";
+disablenpc "Poring Catcher Warper";
+end;
+
+
+
+}
+
+
+
+}
+
+
+-	script	poringbonus	-1,{
+
+OnMobKilled:
+getitem 7227,5; //Edit on what prize would you give to the winner
+end;
+
+}
+
+
+-	script	poringwin	-1,{
+
+OnMobKilled:
+getitem 7227,10; //Edit on what prize would you give to the winner
+announce strcharinfo(0)+" won the Poring Catcher Event!",bc_all,0xFF7F50;
+disablenpc "Poring Catcher Warper";
+killmonsterall "poring_w01";
+mapwarp "poring_w01","splendide",199,142;
+end;
+
+}
+
+-	script	poringlose	-1,{
+
+OnMobKilled:
+dispbottom "You killed the wrong Poring! Yerrrrrrrrrrrr out!";
+warp "splendide",199,142; //Edit to where will you warp players that lost
+sleep2 500;
+if(getmapusers("poring_w01") == 0) goto Lnoone;
+end;
+
+Lnoone:
+announce "No one won the Poring Catcher Event!",bc_all,0xFF7F50;
+mapwarp "poring_c01","splendide",199,142;
+killmonsterall "poring_w01";
+disablenpc "Poring Catcher Warper";
+end;
+
+}
+
+
+poring_w01	mapflag	nopenalty
+poring_w01	mapflag	noloot
+poring_w01	mapflag	noskill
+poring_w01	mapflag	nowarpto
+poring_w01	mapflag	nowarp
+poring_w01	mapflag	noteleport
+poring_w01	mapflag	nomemo
+poring_w01	mapflag	nosave	SavePoint
+poring_w01	mapflag	nobranch
+poring_w01	mapflag	nodrop

@@ -1,0 +1,31 @@
+splendide,187,131,6	script	Freebies	670,{
+        // Freebies ID
+        setarray .@freebie_item[0],14533,14592,12264,12916,12913,12914;
+        // Quantity
+        setarray .@quantity[0],2,1,1,1,1,1;
+ 
+        set .npcname$,"[^990000Freebies^000000]";
+       
+        mes .npcname$;
+        mes "Hello "+strcharinfo(0)+" would you like some freebies? ";
+        next;
+       
+        if(#freebiez == 1)
+        {
+                mes .npcname$;
+                mes "you've already claim your Freebies.";
+                close;
+        }
+       
+         for ( set .@x,0; .@x < getarraysize(.@freebie_item); set .@x,.@x + 1 )
+    {
+        getitem .@freebie_item[.@x], .@quantity[.@x];
+    }
+        set #freebiez,1;
+        mes .npcname$;
+        mes "You already got the GlobalRO's freebies good luck on your new character ";
+        close;
+OnInit:
+waitingroom "Freebies Here!",0;
+end;
+}

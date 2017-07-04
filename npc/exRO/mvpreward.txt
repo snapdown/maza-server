@@ -1,0 +1,8 @@
+-	script	MVPDeathAnnounce	-1,{
+OnNPCKillEvent:
+                if (getmonsterinfo(killedrid,MOB_MVPEXP)) {
+                                announce "The user [" +strcharinfo(0) +"] has killed a [" +getmonsterinfo(killedrid,0) +"] in the map [" +strcharinfo(3) +"]",bc_yellow|bc_all;
+								getitem 7615, 1; // change this to gympass ... I don't have in my item_db	
+                }
+                end;
+}

@@ -1,0 +1,68 @@
+//--- Bitmasks ----
+//	1	-	Top Headgear
+//	2	-	Armor
+//	4	-	Left Hand
+//	8	-	Right Hand
+//	16	-	Garment
+//	32	-	Shoes
+//	64	-	Left Accessory
+//	128	-	Right Accessory
+//	256	-	Middle Headgear
+//	512	-	Lower Headgear
+
+// .....callfunc( "RefineFunc",<itemID>,<Amount>,<BitMasks>,<MinRefine>,<MaxRefine>,<CheckEquip>,<RefineMode>,<Percent> );
+//		1.	itemID		->	Item that will be used during Refine.
+//		2.	Amount		->	Amount of Required Items.
+//		3.	BitMask		->	Refer to above bitmask table.
+//		4.	MinRefine	->	Required Min Refine to use.
+//		5.	MaxRefine	->	What is the Max Refine. [ Can Bypass Default Server Max Refine ]
+//		6.	CheckEquip	->	Check Equipments is Refineable or not. [ 0 = Disable / 1 = Enable ]
+//		7.	RefineMode	->	+1 / Max Refine. [ 0 = +1 Refine / 1 = Max Refine ]
+//		8.	Percent		->	Rate of Success to refine current Equipment.
+
+// Notes : You can Customize it according to whatever way you want.
+//	Different NPCs / Items with Different Settings.
+//	It will consume the items that you defined to Refine  the Equipments according to your Settings.
+
+//----------- If used this as Item Script -----------
+
+// Example : Red Potion with 100% Refine Rate
+//		501,Red_Potion,Red Potion,11,50,,70,,,,,0xFFFFFFFF,7,2,,,,,,{ callfunc( "RefineFunc",501,1,63,0,10,1,0,100 ); },{},{}
+// Change Item Type to 11  and Amount Required to 1 ( Advised )
+
+//----------- If used this as NPC Script ------------
+
+// Example : 90% Success Rate Refiner.
+		splendide,205,132,3	script	Safe Refiner	856,{
+		mes "To Safe Refine: ^FF00001x Safe Refiner Ticket";
+			callfunc( "RefineFunc",29000,1,63,0,10,1,0,100 );
+		}
+
+
+function	script	RefineFunc	{
+
+for( set .@i,1; .@i <= 10; set .@i,.@i + 1 )
+	set .@Menu$,.@Menu$ + (( getarg(2) & pow( 2,(.@i-1 ) ) && getequiprefinerycnt( .@i ) >= getarg(3) && getequiprefinerycnt( .@i ) < getarg(4) && getequipisequiped( .@i) )?"^FF0000+"+getequiprefinerycnt( .@i )+" ^0000FF"+getequipname( .@i )+" "+( getitemslots( getequipid( .@i ) )?"["+getitemslots( getequipid( .@i ) )+"]":"" )+"^000000":"" )+":";
+set .@Refine,select( .@Menu$ );
+mes "Required ^FF0000"+getarg(1)+" x "+getitemname( getarg(0) )+"^000000";
+if( getarg(5) == 1 && !getequipisenableref( .@Refine ) )
+	mes "I cant refine this items. Because it is ^FF0000Un-Refineable^000000.";
+else{
+	if( select( "^FF0000Refine^000000:Cancel" ) == 2 ) close;	
+		if( countitem( getarg(0) ) < getarg(1) ) close;
+			delitem getarg(0),getarg(1);
+		if( rand(100) < getarg(7) ){
+			if( getarg(6) ) 
+				while( getequiprefinerycnt( .@Refine ) < getarg(4) )
+					successrefitem ( .@Refine );
+			else
+				successrefitem ( .@Refine );
+		mes "You have refined : ";
+		mes "^FF0000+"+getequiprefinerycnt( .@Refine )+" ^0000FF"+getequipname( .@Refine )+"^000000";
+		}else{
+			failedrefitem ( .@Refine );
+			mes "Sorry, Failed in Refine and Equipment...Destroyed.";
+		}
+}
+close;
+}

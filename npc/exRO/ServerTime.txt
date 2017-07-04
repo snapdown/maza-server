@@ -1,0 +1,24 @@
+splendide,200,155,5	script	Server Clock	111,{
+	end;
+
+OnInit:
+while( 1 ){
+	delwaitingroom;
+	waitingroom " "+gettimestr( "%H:%M:%S %p",21 ),0;
+	sleep 1000;
+	}
+	end;
+}
+
+splendide,200,155,5 	script	Day_Night	-1,{
+
+OnClock0600:
+	announce "Good Morning Valyrian Ragnarok Players!",0,0x00FF00;
+	day;
+	end;
+
+OnClock1800:
+	announce "Good Evening Valyrian Ragnarok Players!",0,0x00FF00;
+	night;
+	end;
+}
